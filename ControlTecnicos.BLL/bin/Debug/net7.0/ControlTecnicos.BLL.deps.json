@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v7.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v7.0": {
+      "ControlTecnicos.BLL/1.0.0": {
+        "runtime": {
+          "ControlTecnicos.BLL.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "ControlTecnicos.BLL/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
