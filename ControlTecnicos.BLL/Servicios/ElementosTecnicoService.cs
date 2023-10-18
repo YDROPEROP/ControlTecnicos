@@ -1,20 +1,21 @@
 ﻿using ControlTecnicos.DAL.Repository;
-using ControlTecnicos.Models;
+using ControlTecnicos.Models.DTOs;
+using ControlTecnicos.Models.Entities;
 
 namespace ControlTecnicos.BLL.Servicios
 {
     public class ElementosTecnicoService : IElementosTecnicoService
     {
-        private readonly IGenericRepository<ElementosTecnico> _elementosTecnicoRepository;
+        private readonly IGenericRepository<ElementosTecnicoDTO> _elementosTecnicoRepository;
 
-        public ElementosTecnicoService(IGenericRepository<ElementosTecnico> elementosTecnicoRepository) 
+        public ElementosTecnicoService(IGenericRepository<ElementosTecnicoDTO> elementosTecnicoRepository) 
         { 
             this._elementosTecnicoRepository = elementosTecnicoRepository;
         }
 
-        public async Task<bool> Actualizar(ElementosTecnico modelo)
+        public async Task<bool> Actualizar(ElementosTecnicoDTO elementosTecnico)
         {
-            return await this._elementosTecnicoRepository.Actualizar(modelo);
+            return await this._elementosTecnicoRepository.Actualizar(elementosTecnico);
         }
 
         public async Task<bool> Eliminar(int id)
@@ -22,19 +23,29 @@ namespace ControlTecnicos.BLL.Servicios
             return await this._elementosTecnicoRepository.Eliminar(id);
         }
 
-        public async Task<bool> Insertar(ElementosTecnico modelo)
+        public async Task<bool> Insertar(List<ElementosTecnicoDTO> elementosTecnico)
         {
-            return await this._elementosTecnicoRepository.Insertar(modelo);
+            foreach (var elementoTecnico in elementosTecnico)
+            {
+                var elementoTecnicoEncontrado = this.ObtenerTodos().Find(et => et.TecnicoId == elementoTecnico.TecnicoId && et.ElementoId == elementoTecnico.ElementoId);
+                if (elementoTecnicoEncontrado is not null)
+                {
+                    await this.Eliminar(elementoTecnico.Id);
+                }
+                await this._elementosTecnicoRepository.Insertar(elementoTecnico);
+            }
+
+            return true;
         }
 
-        public async Task<ElementosTecnico> Obtener(int id)
+        public ElementosTecnicoDTO Obtener(int id)
         {
-            return await this._elementosTecnicoRepository.Obtener(id);
+            return this._elementosTecnicoRepository.Obtener(id);
         }
 
-        public async Task<IQueryable<ElementosTecnico>> ObtenerTodos()
+        public List<ElementosTecnicoDTO> ObtenerTodos()
         {
-            return await this._elementosTecnicoRepository.ObtenerTodos();
+            return this._elementosTecnicoRepository.ObtenerTodos();
         }
     }
 }

@@ -1,8 +1,44 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model ControlTecnicos.Models.DTOs.TecnicosViewModel
+@{
+    ViewData["Title"] = "Técnicos";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="d-flex justify-content-between align-items-center">
+    <h1>Personal Técnico</h1>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalTecnico">Agregar</button>
 </div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">Sucursal</th>
+            <th scope="col">Elementos</th>
+            <th scope="col">Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var tecnico in Model.Tecnicos)
+        {
+        <tr>
+            <td>@tecnico.Nombre</td>
+            <td>@tecnico?.Sucursal?.Nombre</td>
+            <td>
+                <ul class="mb-0 ps-0">
+                    @foreach (var elemento in tecnico.ElementosTecnicos)
+                    {
+                    <li class="d-flex justify-content-start align-items-center">@elemento?.Elemento?.Nombre <span>(@elemento?.Cantidad)</span></li>
+                    }
+                </ul>
+            </td>
+                <td class="d-flex justify-content-center align-items-center gap-2">
+                <a class="btn btn-primary" asp-action="Editar" asp-route-id="">Editar</a>
+                <a class="btn btn-danger" asp-action="Borrar" asp-route-id="">Eliminar</a>
+            </td>
+        
+        </tr>
+        } 
+    </tbody>
+</table>
+
+<partial name="ModalTecnico" model="Model" />

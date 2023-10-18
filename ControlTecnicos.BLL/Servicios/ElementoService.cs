@@ -1,20 +1,20 @@
 ﻿using ControlTecnicos.DAL.Repository;
-using ControlTecnicos.Models;
+using ControlTecnicos.Models.DTOs;
 
 namespace ControlTecnicos.BLL.Servicios
 {
     public class ElementoService : IElementoService
     {
-        private readonly IGenericRepository<Elemento> _elementoRepository;
+        private readonly IGenericRepository<ElementoDTO> _elementoRepository;
 
-        public ElementoService(IGenericRepository<Elemento> elementoRepository) 
+        public ElementoService(IGenericRepository<ElementoDTO> elementoRepository) 
         { 
             this._elementoRepository = elementoRepository;
         }
 
-        public async Task<bool> Actualizar(Elemento modelo)
+        public async Task<bool> Actualizar(ElementoDTO elemento)
         {
-            return await this._elementoRepository.Actualizar(modelo);
+            return await this._elementoRepository.Actualizar(elemento);
         }
 
         public async Task<bool> Eliminar(int id)
@@ -22,19 +22,19 @@ namespace ControlTecnicos.BLL.Servicios
             return await this._elementoRepository.Eliminar(id);
         }
 
-        public async Task<bool> Insertar(Elemento modelo)
+        public async Task<bool> Insertar(ElementoDTO elemento)
         {
-            return await this._elementoRepository.Insertar(modelo);
+            return await this._elementoRepository.Insertar(elemento);
         }
 
-        public async Task<Elemento> Obtener(int id)
+        public ElementoDTO Obtener(int id)
         {
-            return await this._elementoRepository.Obtener(id);
+            return this._elementoRepository.Obtener(id);
         }
 
-        public async Task<IQueryable<Elemento>> ObtenerTodos()
+        public List<ElementoDTO> ObtenerTodos()
         {
-            return await this._elementoRepository.ObtenerTodos();
+            return this._elementoRepository.ObtenerTodos();
         }
     }
 }

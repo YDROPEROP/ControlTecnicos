@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using ControlTecnicos.DAL.DataContext;
 using ControlTecnicos.DAL.Repository;
-using ControlTecnicos.Models;
 using ControlTecnicos.BLL.Servicios;
+using ControlTecnicos.Models.DTOs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,10 +13,10 @@ builder.Services.AddDbContext<DBTecnicosContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("CadenaSQL"));
 });
 
-builder.Services.AddScoped<IGenericRepository<Sucursal>, SucarsalRepository>();
-builder.Services.AddScoped<IGenericRepository<Elemento>, ElementoRepository>();
-builder.Services.AddScoped<IGenericRepository<Tecnico>, TecnicoRepository>();
-builder.Services.AddScoped<IGenericRepository<ElementosTecnico>, ElementosTecnicoRepository>();
+builder.Services.AddScoped<IGenericRepository<SucursalDTO>, SucarsalRepository>();
+builder.Services.AddScoped<IGenericRepository<ElementoDTO>, ElementoRepository>();
+builder.Services.AddScoped<IGenericRepository<TecnicoDTO>, TecnicoRepository>();
+builder.Services.AddScoped<IGenericRepository<ElementosTecnicoDTO>, ElementosTecnicoRepository>();
 
 builder.Services.AddScoped<ISucursalService, SucursalService>();
 builder.Services.AddScoped<IElementoService, ElementoService>();

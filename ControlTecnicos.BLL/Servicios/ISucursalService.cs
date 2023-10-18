@@ -1,13 +1,13 @@
-﻿using ControlTecnicos.Models;
+﻿using ControlTecnicos.Models.DTOs;
 
 namespace ControlTecnicos.BLL.Servicios
 {
     public interface ISucursalService
     {
-        Task<bool> Insertar(Sucursal modelo);
-        Task<bool> Actualizar(Sucursal modelo);
+        Task<bool> Insertar(SucursalDTO sucursal);
+        Task<bool> Actualizar(SucursalDTO sucursal);
         Task<bool> Eliminar(int id);
-        Task<Sucursal> Obtener(int id);
-        Task<IQueryable<Sucursal>> ObtenerTodos();
+        SucursalDTO Obtener(int id);
+        List<SucursalDTO> ObtenerTodos();
     }
 }

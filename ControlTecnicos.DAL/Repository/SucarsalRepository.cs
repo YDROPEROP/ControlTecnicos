@@ -1,9 +1,10 @@
 ﻿using ControlTecnicos.DAL.DataContext;
-using ControlTecnicos.Models;
+using ControlTecnicos.Models.DTOs;
+using ControlTecnicos.Models.Entities;
 
 namespace ControlTecnicos.DAL.Repository
 {
-    public class SucarsalRepository : IGenericRepository<Sucursal>
+    public class SucarsalRepository : IGenericRepository<SucursalDTO>
     {
         private readonly DBTecnicosContext _dbContext;
 
@@ -12,8 +13,14 @@ namespace ControlTecnicos.DAL.Repository
             this._dbContext = context;
         }
 
-        public async Task<bool> Actualizar(Sucursal modelo)
+        public async Task<bool> Actualizar(SucursalDTO sucursal)
         {
+            var modelo = new Sucursal()
+            {
+                Id = sucursal.Id,
+                Nombre = sucursal.Nombre
+            };
+
             this._dbContext.Sucursales.Update(modelo);
             await _dbContext.SaveChangesAsync();
 
@@ -29,22 +36,42 @@ namespace ControlTecnicos.DAL.Repository
             return true;
         }
 
-        public async Task<bool> Insertar(Sucursal modelo)
+        public async Task<bool> Insertar(SucursalDTO sucursal)
         {
+            var modelo = new Sucursal()
+            {
+                Nombre = sucursal.Nombre
+            };
+
             this._dbContext.Sucursales.Add(modelo);
             await _dbContext.SaveChangesAsync();
 
             return true;
         }
 
-        public async Task<Sucursal> Obtener(int id)
+        public SucursalDTO Obtener(int id)
         {
-            return await this._dbContext.Sucursales.FindAsync(id);
+            var sucursal = (from s in this._dbContext.Sucursales
+                            where s.Id == id
+                            select new SucursalDTO
+                            {
+                                Id = s.Id,
+                                Nombre = s.Nombre
+                            }).FirstOrDefault();
+
+            return sucursal;
         }
 
-        public async Task<IQueryable<Sucursal>> ObtenerTodos()
+        public List<SucursalDTO> ObtenerTodos()
         {
-            return this._dbContext.Sucursales;
+            var sucursales = (from s in this._dbContext.Sucursales
+                            select new SucursalDTO
+                            {
+                                Id = s.Id,
+                                Nombre = s.Nombre
+                            }).ToList();
+
+            return sucursales;
         }
     }
 }

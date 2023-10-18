@@ -1,9 +1,10 @@
 ﻿using ControlTecnicos.DAL.DataContext;
-using ControlTecnicos.Models;
+using ControlTecnicos.Models.DTOs;
+using ControlTecnicos.Models.Entities;
 
 namespace ControlTecnicos.DAL.Repository
 {
-    public class ElementoRepository : IGenericRepository<Elemento>
+    public class ElementoRepository : IGenericRepository<ElementoDTO>
     {
         private readonly DBTecnicosContext _dbContext;
 
@@ -11,8 +12,15 @@ namespace ControlTecnicos.DAL.Repository
         {
             this._dbContext = context;
         }
-        public async Task<bool> Actualizar(Elemento modelo)
+
+        public async Task<bool> Actualizar(ElementoDTO elemento)
         {
+            var modelo = new Elemento()
+            {
+                Id = elemento.Id,
+                Nombre = elemento.Nombre
+            };
+
             this._dbContext.Elementos.Update(modelo);
             await _dbContext.SaveChangesAsync();
 
@@ -28,22 +36,42 @@ namespace ControlTecnicos.DAL.Repository
             return true;
         }
 
-        public async Task<bool> Insertar(Elemento modelo)
+        public async Task<bool> Insertar(ElementoDTO elemento)
         {
+            var modelo = new Elemento()
+            {
+                Nombre = elemento.Nombre
+            };
+
             this._dbContext.Elementos.Add(modelo);
             await _dbContext.SaveChangesAsync();
 
             return true;
         }
 
-        public async Task<Elemento> Obtener(int id)
+        public ElementoDTO Obtener(int id)
         {
-            return await this._dbContext.Elementos.FindAsync(id);
+            var elemento = (from e in this._dbContext.Elementos
+                            where e.Id == id
+                            select new ElementoDTO
+                            {
+                                Id = e.Id,
+                                Nombre = e.Nombre
+                            }).FirstOrDefault();
+
+            return elemento;
         }
 
-        public async Task<IQueryable<Elemento>> ObtenerTodos()
+        public List<ElementoDTO> ObtenerTodos()
         {
-            return this._dbContext.Elementos;
+            var elementos = (from e in this._dbContext.Elementos
+                            select new ElementoDTO
+                            {
+                                Id = e.Id,
+                                Nombre = e.Nombre
+                            }).ToList();
+
+            return elementos;
         }
     }
 }

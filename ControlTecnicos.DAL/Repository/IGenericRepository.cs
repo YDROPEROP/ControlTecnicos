@@ -1,11 +1,11 @@
 ﻿namespace ControlTecnicos.DAL.Repository
 {
-    public interface IGenericRepository<TEntityModel> where TEntityModel : class
+    public interface IGenericRepository<T> where T : class
     {
-        Task<bool> Insertar(TEntityModel modelo);
-        Task<bool> Actualizar(TEntityModel modelo);
+        Task<bool> Insertar(T dto);
+        Task<bool> Actualizar(T dto);
         Task<bool> Eliminar(int id);
-        Task<TEntityModel> Obtener(int id);
-        Task<IQueryable<TEntityModel>> ObtenerTodos();
+        T Obtener(int id);
+        List<T> ObtenerTodos();
     }
 }

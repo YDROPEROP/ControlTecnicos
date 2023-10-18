@@ -1,19 +1,29 @@
 ﻿using ControlTecnicos.DAL.DataContext;
-using ControlTecnicos.Models;
+using ControlTecnicos.Models.Entities;
+using ControlTecnicos.Models.DTOs;
 
 namespace ControlTecnicos.DAL.Repository
 {
-    public class ElementosTecnicoRepository : IGenericRepository<ElementosTecnico>
+    public class ElementosTecnicoRepository : IGenericRepository<ElementosTecnicoDTO>
     {
         private readonly DBTecnicosContext _dbContext;
 
         public ElementosTecnicoRepository(DBTecnicosContext dbContext) 
         { 
-        this._dbContext = dbContext;
+            this._dbContext = dbContext;
         }
 
-        public async Task<bool> Actualizar(ElementosTecnico modelo)
+        public async Task<bool> Actualizar(ElementosTecnicoDTO elementosTecnico)
         {
+            var modelo = new ElementosTecnico()
+            {
+                Id = elementosTecnico.Id,
+                TecnicoId = elementosTecnico.TecnicoId,
+                ElementoId = elementosTecnico.ElementoId,
+                Cantidad = elementosTecnico.Cantidad,
+                FechaModificacion = new DateTime()
+            };
+
             this._dbContext.ElementosTecnicos.Update(modelo);
             await _dbContext.SaveChangesAsync();
 
@@ -29,22 +39,48 @@ namespace ControlTecnicos.DAL.Repository
             return true;
         }
 
-        public async Task<bool> Insertar(ElementosTecnico modelo)
+        public async Task<bool> Insertar(ElementosTecnicoDTO elementosTecnico)
         {
+            var modelo = new ElementosTecnico()
+            {
+                TecnicoId = elementosTecnico.TecnicoId,
+                ElementoId = elementosTecnico.ElementoId,
+                Cantidad = elementosTecnico.Cantidad
+            };
+
             this._dbContext.ElementosTecnicos.Add(modelo);
             await _dbContext.SaveChangesAsync();
 
             return true;
         }
 
-        public async Task<ElementosTecnico> Obtener(int id)
+        public ElementosTecnicoDTO Obtener(int id)
         {
-            return await this._dbContext.ElementosTecnicos.FindAsync(id);
+            var elementosTecnico = (from et in this._dbContext.ElementosTecnicos
+                                    where et.Id == id
+                                    select new ElementosTecnicoDTO
+                                    {
+                                        Id = et.Id,
+                                        TecnicoId = et.TecnicoId,
+                                        ElementoId = et.ElementoId,
+                                        Cantidad = et.Cantidad
+                                    }).FirstOrDefault();
+            
+            return elementosTecnico;
         }
 
-        public async Task<IQueryable<ElementosTecnico>> ObtenerTodos()
+        public List<ElementosTecnicoDTO> ObtenerTodos()
         {
-            return this._dbContext.ElementosTecnicos;
+            var elementosTecnicos = (from et in this._dbContext.ElementosTecnicos
+                                    select new ElementosTecnicoDTO
+                                    {
+                                        Id = et.Id,
+                                        TecnicoId = et.TecnicoId,
+                                        ElementoId = et.ElementoId,
+                                        Cantidad = et.Cantidad
+                                    }).ToList();
+
+            return elementosTecnicos;
         }
     }
 }

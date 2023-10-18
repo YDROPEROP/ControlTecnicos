@@ -35,13 +35,15 @@ CREATE TABLE ElementosTecnico(
 	Id INT PRIMARY KEY IDENTITY,
 	TecnicoId INT FOREIGN KEY REFERENCES Tecnicos(Id),
 	ElementoId INT FOREIGN KEY REFERENCES Elementos(Id),
+	Cantidad INT,
 	FechaCreacion DATETIME DEFAULT GETDATE(),
 	FechaModificacion DATETIME NULL
 );
 
-INSERT INTO ElementosTecnico(TecnicoId,ElementoId) 
+INSERT INTO ElementosTecnico(TecnicoId,ElementoId, Cantidad) 
 VALUES 
 	(
 		1,
-		1
+		1,
+		2
 	);

@@ -1,20 +1,20 @@
 ﻿using ControlTecnicos.DAL.Repository;
-using ControlTecnicos.Models;
+using ControlTecnicos.Models.DTOs;
 
 namespace ControlTecnicos.BLL.Servicios
 {
     public class SucursalService : ISucursalService
     {
-        private readonly IGenericRepository<Sucursal> _sucursalRepository;
+        private readonly IGenericRepository<SucursalDTO> _sucursalRepository;
 
-        public SucursalService(IGenericRepository<Sucursal> sucursalRepository) 
+        public SucursalService(IGenericRepository<SucursalDTO> sucursalRepository) 
         { 
             this._sucursalRepository = sucursalRepository;
         }
 
-        public async Task<bool> Actualizar(Sucursal modelo)
+        public async Task<bool> Actualizar(SucursalDTO sucursal)
         {
-            return await this._sucursalRepository.Actualizar(modelo);
+            return await this._sucursalRepository.Actualizar(sucursal);
         }
 
         public async Task<bool> Eliminar(int id)
@@ -22,19 +22,19 @@ namespace ControlTecnicos.BLL.Servicios
             return await this._sucursalRepository.Eliminar(id);
         }
 
-        public async Task<bool> Insertar(Sucursal modelo)
+        public async Task<bool> Insertar(SucursalDTO sucursal)
         {
-            return await this._sucursalRepository.Insertar(modelo);
+            return await this._sucursalRepository.Insertar(sucursal);
         }
 
-        public async Task<Sucursal> Obtener(int id)
+        public SucursalDTO Obtener(int id)
         {
-            return await this._sucursalRepository.Obtener(id);
+            return this._sucursalRepository.Obtener(id);
         }
 
-        public async Task<IQueryable<Sucursal>> ObtenerTodos()
+        public List<SucursalDTO> ObtenerTodos()
         {
-            return await this._sucursalRepository.ObtenerTodos();
+            return this._sucursalRepository.ObtenerTodos();
         }
     }
 }

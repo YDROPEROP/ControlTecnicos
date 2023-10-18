@@ -1,13 +1,13 @@
-﻿using ControlTecnicos.Models;
+﻿using ControlTecnicos.Models.DTOs;
 
 namespace ControlTecnicos.BLL.Servicios
 {
     public interface IElementoService
     {
-        Task<bool> Insertar(Elemento modelo);
-        Task<bool> Actualizar(Elemento modelo);
+        Task<bool> Insertar(ElementoDTO elemento);
+        Task<bool> Actualizar(ElementoDTO elemento);
         Task<bool> Eliminar(int id);
-        Task<Elemento> Obtener(int id);
-        Task<IQueryable<Elemento>> ObtenerTodos();
+        ElementoDTO Obtener(int id);
+        List<ElementoDTO> ObtenerTodos();
     }
 }
