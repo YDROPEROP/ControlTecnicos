@@ -1,0 +1,46 @@
+<div class="modal" id="modalTecnico" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">{{ editarTecnico ? 'Editar' : 'Crear' }} Técnico</h4>
+                <button type="button" class="close" data-bs-dismiss="modal" (click)="limpiarTecnico()">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <form (ngSubmit)="onSubmit(tecnico)">
+                    <div class="form-group">
+                        <label for="nombre">Nombre:</label>
+                        <input id="nombre" type="text" required class="form-control" name="nombre" [(ngModel)]="tecnico.nombre">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="codigo">Codigo:</label>
+                        <input id="codigo" type="text" required class="form-control" name="codigo" [(ngModel)]="tecnico.codigo">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sueldo">Sueldo Base:</label>
+                        <input id="sueldo" type="number" required class="form-control" name="sueldoBase" [(ngModel)]="tecnico.sueldoBase">
+                    </div>
+                    <div class="form-group">
+                        <label for="sucursal">Sucursal:</label>
+                        <select id="sucursal" class="form-select" name="sucursal" [(ngModel)]="tecnico.sucursalId">
+                            <option *ngFor="let sucursal of sucursales" [value]="sucursal.id">{{ sucursal?.nombre }}</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-8">
+                            <label for="elementos">Elementos:</label>
+                            <select id="elementos" multiple class="form-select" name="elementos" [(ngModel)]="tecnico.elementos">
+                                <option *ngFor="let elemento of elementos" [value]="elemento">{{ elemento?.nombre }}</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-2">Guardar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

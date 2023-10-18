@@ -1,0 +1,34 @@
+<div class="d-flex justify-content-between align-items-center mx-2">
+    <h1>Listado Técnicos</h1>
+    <button id="buttonModal" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTecnico">Agregar</button>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">Sucursal</th>
+            <th scope="col">Elementos</th>
+            <th scope="col">Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let tecnico of tecnicos">
+            <td>{{ tecnico?.nombre }}</td>
+            <td>{{ tecnico?.sucursal?.nombre }}</td>
+            <td>
+                <ul class="mb-0 ps-0">
+                    <li *ngFor="let elemento of tecnico.elementosTecnicos" 
+                        class="d-flex justify-content-start align-items-center">{{ elemento?.elemento?.nombre }} <span class="ms-1">({{ elemento?.cantidad }})</span></li>
+                </ul>
+            </td>
+                <td class="d-flex justify-content-center align-items-center gap-2">
+                <button class="btn btn-primary" (click)="editarTecnico(tecnico)">Editar</button>
+                <button class="btn btn-danger" (click)="eliminarTecnico(tecnico.id)">Eliminar</button>
+            </td>
+        
+        </tr>
+    </tbody>
+</table>
+
+<app-modal-tecnico [tecnico]="tecnico" [sucursales]="sucursales" [elementos]="elementos"></app-modal-tecnico>
