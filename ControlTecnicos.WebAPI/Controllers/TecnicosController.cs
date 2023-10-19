@@ -55,7 +55,7 @@ namespace ControlTecnicos.WebAPI.Controllers
             return this._tecnicoService.Actualizar(tecnicoCompleto);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id:int}")]
         public Task<bool> EliminarTecnico(int id)
         {
             return this._tecnicoService.Eliminar(id);

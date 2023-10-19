@@ -34,6 +34,6 @@ export class TecnicosService {
   }
 
   eliminarTecnico(id: number): Observable<boolean> {
-    return this._http.delete<boolean>(this._url);
+    return this._http.delete<boolean>(`${this._url}/${id}`);
   }
 }

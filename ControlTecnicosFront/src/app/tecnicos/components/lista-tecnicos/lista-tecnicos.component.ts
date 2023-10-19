@@ -34,6 +34,11 @@ export class ListaTecnicosComponent implements OnInit {
 
   async eliminarTecnico(id: number): Promise<void> {
     await lastValueFrom(this._tecnicosService.eliminarTecnico(id));
+    Swal.fire({
+      icon: 'success',
+      title: 'Correcto',
+      text: 'Técnico eliminado correctamente'
+    });
   }
 
   actualizarTecnico(tecnico: ITecnico): void {

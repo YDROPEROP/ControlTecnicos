@@ -22,6 +22,7 @@ namespace ControlTecnicos.DAL.Repository
                 Codigo = tecnico.Codigo,
                 SueldoBase = tecnico.SueldoBase,
                 SucursalId = tecnico.Sucursal.Id,
+                FechaCreacion = tecnico.FechaCreacion,
                 FechaModificacion = DateTime.Now 
             };
 

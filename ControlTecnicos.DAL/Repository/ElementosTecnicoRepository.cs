@@ -21,6 +21,7 @@ namespace ControlTecnicos.DAL.Repository
                 TecnicoId = elementosTecnico.TecnicoId,
                 ElementoId = elementosTecnico.ElementoId,
                 Cantidad = elementosTecnico.Cantidad,
+                FechaCreacion = elementosTecnico.FechaCreacion,
                 FechaModificacion = DateTime.Now
             };
 
