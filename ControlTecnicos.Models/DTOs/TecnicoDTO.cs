@@ -11,6 +11,8 @@ namespace ControlTecnicos.Models.DTOs
         public string? Codigo { get; set; }
 
         public decimal? SueldoBase { get; set; }
+        public int? SucursalId { get; set; }
+        public DateTime? FechaCreacion { get; set; }
 
         public virtual List<ElementosTecnicoDTO> ElementosTecnicos { get; set; } = new List<ElementosTecnicoDTO>();
 

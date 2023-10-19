@@ -22,7 +22,7 @@ namespace ControlTecnicos.BLL.Servicios
             return await this._elementoRepository.Eliminar(id);
         }
 
-        public async Task<bool> Insertar(ElementoDTO elemento)
+        public async Task<ElementoDTO> Insertar(ElementoDTO elemento)
         {
             return await this._elementoRepository.Insertar(elemento);
         }

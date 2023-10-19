@@ -25,16 +25,12 @@ export class TecnicosService {
     return this._http.get<ITecnico[]>(this._url);
   }
 
-  actualizarElementosTecnico(elementosTecnico: IElementosTecnico[]): Observable<boolean> {
-    return this._http.post<boolean>(`${this._url}/elementos-tecnico`, elementosTecnico);
+  crearTecnico(tecnico: ITecnico, elementosTecnico: IElementosTecnico[]): Observable<boolean> {
+    return this._http.post<boolean>(this._url, { tecnico, elementosTecnico });
   }
 
-  crearTecnico(tecnico: ITecnico): Observable<boolean> {
-    return this._http.post<boolean>(this._url, tecnico);
-  }
-
-  actualizaTecnico(tecnico: ITecnico): Observable<boolean> {
-    return this._http.put<boolean>(`${this._url}/elementos-tecnico`, tecnico);
+  actualizaTecnico(tecnico: ITecnico, elementosTecnico: IElementosTecnico[]): Observable<boolean> {
+    return this._http.put<boolean>(this._url, { tecnico, elementosTecnico });
   }
 
   eliminarTecnico(id: number): Observable<boolean> {

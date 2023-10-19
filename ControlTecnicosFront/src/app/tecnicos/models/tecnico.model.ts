@@ -5,6 +5,7 @@ export class Tecnico implements ITecnico {
     nombre!: string;
     codigo!: string;
     sueldoBase!: number;
+    fechaCreacion!: string;
     elementosTecnicos!: ElementosTecnico[];
     elementos!: Elemento[];
     sucursalId!: number;
@@ -20,6 +21,7 @@ export class ElementosTecnico implements IElementosTecnico {
     id!: number;
     tecnicoId!: number;
     elementoId!: number;
+    fechaCreacion!: string;
     cantidad!: number;
     elemento!: Elemento;
     tecnico!: Tecnico;
@@ -28,4 +30,6 @@ export class ElementosTecnico implements IElementosTecnico {
 export class Elemento implements IElemento {
     id!: number;
     nombre!: string;
+    cantidad!: number;
+    noValido!: boolean;
 }

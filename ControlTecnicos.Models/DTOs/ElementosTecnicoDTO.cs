@@ -11,6 +11,7 @@ namespace ControlTecnicos.Models.DTOs
         public int? ElementoId { get; set; }
 
         public int? Cantidad { get; set; }
+        public DateTime? FechaCreacion { get; set; }
 
         public virtual Elemento? Elemento { get; set; }
 

@@ -3,6 +3,7 @@ export interface ITecnico {
     nombre: string;
     codigo: string;
     sueldoBase: number;
+    fechaCreacion: string;
     elementosTecnicos: IElementosTecnico[];
     elementos: IElemento[];
     sucursalId: number;
@@ -18,6 +19,7 @@ export interface IElementosTecnico {
     id?: number;
     tecnicoId: number;
     elementoId: number;
+    fechaCreacion?: string;
     cantidad: number;
     elemento?: IElemento;
     tecnico?: ITecnico;
@@ -26,4 +28,6 @@ export interface IElementosTecnico {
 export interface IElemento {
     id: number;
     nombre: string;
+    cantidad: number;
+    noValido: boolean;
 }

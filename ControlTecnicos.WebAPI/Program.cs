@@ -14,7 +14,8 @@ builder.Services.AddCors(options =>
                       policy =>
                       {
                           policy.AllowAnyOrigin()
-                            .AllowAnyHeader();
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
                       });
 });
 
@@ -33,7 +34,7 @@ builder.Services.AddDbContext<DBTecnicosContext>(options =>
 builder.Services.AddScoped<IGenericRepository<SucursalDTO>, SucarsalRepository>();
 builder.Services.AddScoped<IGenericRepository<ElementoDTO>, ElementoRepository>();
 builder.Services.AddScoped<IGenericRepository<TecnicoDTO>, TecnicoRepository>();
-builder.Services.AddScoped<IGenericRepository<ElementosTecnicoDTO>, ElementosTecnicoRepository>();
+builder.Services.AddScoped<IElementosTecnicoRepository, ElementosTecnicoRepository>();
 
 builder.Services.AddScoped<ISucursalService, SucursalService>();
 builder.Services.AddScoped<IElementoService, ElementoService>();

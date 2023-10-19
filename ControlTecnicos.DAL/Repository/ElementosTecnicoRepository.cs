@@ -4,7 +4,7 @@ using ControlTecnicos.Models.DTOs;
 
 namespace ControlTecnicos.DAL.Repository
 {
-    public class ElementosTecnicoRepository : IGenericRepository<ElementosTecnicoDTO>
+    public class ElementosTecnicoRepository : IElementosTecnicoRepository
     {
         private readonly DBTecnicosContext _dbContext;
 
@@ -21,7 +21,7 @@ namespace ControlTecnicos.DAL.Repository
                 TecnicoId = elementosTecnico.TecnicoId,
                 ElementoId = elementosTecnico.ElementoId,
                 Cantidad = elementosTecnico.Cantidad,
-                FechaModificacion = new DateTime()
+                FechaModificacion = DateTime.Now
             };
 
             this._dbContext.ElementosTecnicos.Update(modelo);
@@ -39,7 +39,16 @@ namespace ControlTecnicos.DAL.Repository
             return true;
         }
 
-        public async Task<bool> Insertar(ElementosTecnicoDTO elementosTecnico)
+        public async Task<bool> EliminarPorTecnico(int tecnicoId)
+        {
+            var modelos = this._dbContext.ElementosTecnicos.Where(elemento => elemento.TecnicoId == tecnicoId);
+            this._dbContext.ElementosTecnicos.RemoveRange(modelos);
+            await _dbContext.SaveChangesAsync();
+
+            return true;
+        }
+
+        public async Task<ElementosTecnicoDTO> Insertar(ElementosTecnicoDTO elementosTecnico)
         {
             var modelo = new ElementosTecnico()
             {
@@ -51,7 +60,9 @@ namespace ControlTecnicos.DAL.Repository
             this._dbContext.ElementosTecnicos.Add(modelo);
             await _dbContext.SaveChangesAsync();
 
-            return true;
+            elementosTecnico.Id = modelo.Id;
+
+            return elementosTecnico;
         }
 
         public ElementosTecnicoDTO Obtener(int id)
@@ -63,6 +74,7 @@ namespace ControlTecnicos.DAL.Repository
                                         Id = et.Id,
                                         TecnicoId = et.TecnicoId,
                                         ElementoId = et.ElementoId,
+                                        FechaCreacion = et.FechaCreacion,
                                         Cantidad = et.Cantidad
                                     }).FirstOrDefault();
             
@@ -77,6 +89,7 @@ namespace ControlTecnicos.DAL.Repository
                                         Id = et.Id,
                                         TecnicoId = et.TecnicoId,
                                         ElementoId = et.ElementoId,
+                                        FechaCreacion = et.FechaCreacion,
                                         Cantidad = et.Cantidad
                                     }).ToList();
 

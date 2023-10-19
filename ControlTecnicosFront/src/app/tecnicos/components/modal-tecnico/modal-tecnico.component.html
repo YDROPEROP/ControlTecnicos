@@ -3,42 +3,74 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">{{ editarTecnico ? 'Editar' : 'Crear' }} Técnico</h4>
-                <button type="button" class="close" data-bs-dismiss="modal" (click)="limpiarTecnico()">&times;</button>
+                <button id="botonCerrarModal" type="button" class="close" data-bs-dismiss="modal" (click)="limpiarTecnico()">&times;</button>
             </div>
 
             <div class="modal-body">
-                <form (ngSubmit)="onSubmit(tecnico)">
+                <form (ngSubmit)="onSubmit(tecnico)" #tecnicoForm="ngForm">
                     <div class="form-group">
-                        <label for="nombre">Nombre:</label>
-                        <input id="nombre" type="text" required class="form-control" name="nombre" [(ngModel)]="tecnico.nombre">
+                        <label for="nombre">Nombre: <span class="text-danger">*</span></label>
+                        <input id="nombre" type="text" required class="form-control" name="nombre" [(ngModel)]="tecnico.nombre" #nombre="ngModel">
+                        <div class="invalid-field" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+                            Ingrese el nombre de usuario.
+                        </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="codigo">Codigo:</label>
-                        <input id="codigo" type="text" required class="form-control" name="codigo" [(ngModel)]="tecnico.codigo">
+                        <label for="codigo">Codigo: <span class="text-danger">*</span></label>
+                        <input id="codigo" type="text" required class="form-control" name="codigo" [(ngModel)]="tecnico.codigo" #codigo="ngModel">
+                        <div class="invalid-field" *ngIf="codigo.invalid && (codigo.dirty || codigo.touched)">
+                            Ingrese el codigo de usuario.
+                        </div>
+                        <div class="invalid-field" *ngIf="codigoIncorrecto">
+                            Ingrese un código valido solo con letras y números. 
+                        </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="sueldo">Sueldo Base:</label>
-                        <input id="sueldo" type="number" required class="form-control" name="sueldoBase" [(ngModel)]="tecnico.sueldoBase">
+                        <label for="sueldo">Sueldo Base: <span class="text-danger">*</span></label>
+                        <input id="sueldo" type="number" required class="form-control" name="sueldoBase" [(ngModel)]="tecnico.sueldoBase" #sueldoBase="ngModel">
+                        <div class="invalid-field" *ngIf="sueldoBase.invalid && (sueldoBase.dirty || sueldoBase.touched)">
+                            Ingrese el sueldo base.
+                        </div>
                     </div>
+                    
+
                     <div class="form-group">
-                        <label for="sucursal">Sucursal:</label>
-                        <select id="sucursal" class="form-select" name="sucursal" [(ngModel)]="tecnico.sucursalId">
+                        <label for="sucursal">Sucursal: <span class="text-danger">*</span></label>
+                        <select id="sucursal" class="form-select" name="sucursal" [(ngModel)]="tecnico.sucursalId" required #sucursal="ngModel">
                             <option *ngFor="let sucursal of sucursales" [value]="sucursal.id">{{ sucursal?.nombre }}</option>
                         </select>
+                        <div class="invalid-field" *ngIf="sucursal.invalid && (sucursal.dirty || sucursal.touched)">
+                            Seleccione una sucursal.
+                        </div>
                     </div>
 
                     <div class="form-group row">
-                        <div class="col-8">
-                            <label for="elementos">Elementos:</label>
-                            <select id="elementos" multiple class="form-select" name="elementos" [(ngModel)]="tecnico.elementos">
-                                <option *ngFor="let elemento of elementos" [value]="elemento">{{ elemento?.nombre }}</option>
-                            </select>
-                        </div>
-
+                        <label for="elementos">Elementos:</label>
+                        <table class="table">
+                            <thead>
+                              <tr>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Cantidad</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let elemento of elementos; index as i">
+                                <td>{{ elemento.nombre }}</td>
+                                <td>
+                                    <input id="cantidad" type="number" class="form-control" [name]="'cantidad' + i" [(ngModel)]="elemento.cantidad">
+                                    <div class="invalid-field" *ngIf="elemento.noValido">
+                                        Ingrese una cantidad entre 1 y 10.
+                                    </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                        </table>
                     </div>
-                    <button type="submit" class="btn btn-primary mt-2">Guardar</button>
+                    <div class="modal-footer">
+                        <button type="submit" [disabled]="tecnicoForm.invalid" class="btn btn-primary mt-2">Guardar</button>
+                    </div>
                 </form>
             </div>
         </div>

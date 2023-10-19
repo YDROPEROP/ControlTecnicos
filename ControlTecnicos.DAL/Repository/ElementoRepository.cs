@@ -36,7 +36,7 @@ namespace ControlTecnicos.DAL.Repository
             return true;
         }
 
-        public async Task<bool> Insertar(ElementoDTO elemento)
+        public async Task<ElementoDTO> Insertar(ElementoDTO elemento)
         {
             var modelo = new Elemento()
             {
@@ -46,7 +46,9 @@ namespace ControlTecnicos.DAL.Repository
             this._dbContext.Elementos.Add(modelo);
             await _dbContext.SaveChangesAsync();
 
-            return true;
+            elemento.Id = modelo.Id;
+
+            return elemento;
         }
 
         public ElementoDTO Obtener(int id)

@@ -36,7 +36,7 @@ namespace ControlTecnicos.DAL.Repository
             return true;
         }
 
-        public async Task<bool> Insertar(SucursalDTO sucursal)
+        public async Task<SucursalDTO> Insertar(SucursalDTO sucursal)
         {
             var modelo = new Sucursal()
             {
@@ -46,7 +46,9 @@ namespace ControlTecnicos.DAL.Repository
             this._dbContext.Sucursales.Add(modelo);
             await _dbContext.SaveChangesAsync();
 
-            return true;
+            sucursal.Id = modelo.Id;
+
+            return sucursal;
         }
 
         public SucursalDTO Obtener(int id)

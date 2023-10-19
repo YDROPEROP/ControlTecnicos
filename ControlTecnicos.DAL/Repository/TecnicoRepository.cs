@@ -22,7 +22,7 @@ namespace ControlTecnicos.DAL.Repository
                 Codigo = tecnico.Codigo,
                 SueldoBase = tecnico.SueldoBase,
                 SucursalId = tecnico.Sucursal.Id,
-                FechaModificacion = new DateTime()
+                FechaModificacion = DateTime.Now 
             };
 
             this._dbContext.Tecnicos.Update(modelo);
@@ -40,20 +40,22 @@ namespace ControlTecnicos.DAL.Repository
             return true;
         }
 
-        public async Task<bool> Insertar(TecnicoDTO tecnico)
+        public async Task<TecnicoDTO> Insertar(TecnicoDTO tecnico)
         {
             var modelo = new Tecnico()
             {
                 Nombre = tecnico.Nombre,
                 Codigo = tecnico.Codigo,
                 SueldoBase = tecnico.SueldoBase,
-                SucursalId = tecnico.Sucursal.Id
+                SucursalId = tecnico.SucursalId
             };
 
             this._dbContext.Tecnicos.Add(modelo);
             await _dbContext.SaveChangesAsync();
 
-            return true;
+            tecnico.Id = modelo.Id;
+
+            return tecnico;
         }
 
         public TecnicoDTO Obtener(int id)
@@ -67,6 +69,8 @@ namespace ControlTecnicos.DAL.Repository
                               Nombre = t.Nombre,
                               Codigo = t.Codigo,
                               SueldoBase = t.SueldoBase,
+                              FechaCreacion = t.FechaCreacion,
+                              SucursalId = t.SucursalId,
                               Sucursal = s
                           }).FirstOrDefault();
 
@@ -83,6 +87,8 @@ namespace ControlTecnicos.DAL.Repository
                                 Nombre = t.Nombre,
                                 Codigo = t.Codigo,
                                 SueldoBase = t.SueldoBase,
+                                FechaCreacion = t.FechaCreacion,
+                                SucursalId = t.SucursalId,
                                 Sucursal = s
                             }).ToList();
 

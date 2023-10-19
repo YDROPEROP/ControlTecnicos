@@ -1,6 +1,5 @@
 ﻿using ControlTecnicos.BLL.Servicios;
 using ControlTecnicos.Models.DTOs;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ControlTecnicos.WebAPI.Controllers
@@ -44,22 +43,16 @@ namespace ControlTecnicos.WebAPI.Controllers
             return this._elementoService.ObtenerTodos();
         }
 
-        [HttpPost("elementos-tecnico")]
-        public Task<bool> CrearElementosTecnico([FromBody] List<ElementosTecnicoDTO> elementosTecnico)
-        {
-            return this._elementosTecnicoService.Insertar(elementosTecnico);
-        }
-
         [HttpPost]
-        public Task<bool> CrearTecnico([FromBody] TecnicoDTO tecnico)
+        public Task<bool> CrearTecnico([FromBody] TecnicoCompletoDTO tecnicoCompleto)
         {
-            return this._tecnicoService.Insertar(tecnico);
+            return this._tecnicoService.Insertar(tecnicoCompleto);
         }
 
         [HttpPut]
-        public Task<bool> ActualizarTecnico([FromBody] TecnicoDTO tecnico)
+        public Task<bool> ActualizarTecnico([FromBody] TecnicoCompletoDTO tecnicoCompleto)
         {
-            return this._tecnicoService.Actualizar(tecnico);
+            return this._tecnicoService.Actualizar(tecnicoCompleto);
         }
 
         [HttpDelete]

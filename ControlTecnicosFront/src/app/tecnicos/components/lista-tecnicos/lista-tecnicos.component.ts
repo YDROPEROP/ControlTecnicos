@@ -3,6 +3,7 @@ import { TecnicosService } from '../../services/tecnicos.service';
 import { IElemento, ISucursal, ITecnico } from '../../models/tecnico.interface';
 import { lastValueFrom } from 'rxjs';
 import { Tecnico } from '../../models/tecnico.model';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-lista-tecnicos',
@@ -27,11 +28,15 @@ export class ListaTecnicosComponent implements OnInit {
 
   editarTecnico(tecnico: ITecnico): void {
     this.tecnico = tecnico;
-    const buttonModal = document.getElementById('buttonModal') as HTMLElement;
+    const buttonModal = document.getElementById('botonModal') as HTMLElement;
     buttonModal.click();
   }
 
   async eliminarTecnico(id: number): Promise<void> {
     await lastValueFrom(this._tecnicosService.eliminarTecnico(id));
+  }
+
+  actualizarTecnico(tecnico: ITecnico): void {
+    this.tecnico = tecnico;
   }
 }

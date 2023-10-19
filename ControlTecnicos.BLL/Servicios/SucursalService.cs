@@ -22,7 +22,7 @@ namespace ControlTecnicos.BLL.Servicios
             return await this._sucursalRepository.Eliminar(id);
         }
 
-        public async Task<bool> Insertar(SucursalDTO sucursal)
+        public async Task<SucursalDTO> Insertar(SucursalDTO sucursal)
         {
             return await this._sucursalRepository.Insertar(sucursal);
         }
